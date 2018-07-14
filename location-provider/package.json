@@ -1,7 +1,7 @@
 {
-  "name": "addressDecoderService",
+  "name": "locationProvider",
   "version": "0.0.1",
-  "description": "Address decoder",
+  "description": "Location Provider",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.14.1",
