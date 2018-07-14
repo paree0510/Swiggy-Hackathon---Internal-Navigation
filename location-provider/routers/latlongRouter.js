@@ -6,7 +6,8 @@
 
     var routes = express.Router();
 
-    routes.get('/v1/location', locationController.getLatLng);
+    routes.get('/v1/location/fetch', locationController.getLatLng);
+    routes.post('/v1/location/push', locationController.pushLatLong);
     latlongRouter.routes = routes;
 
 })(module.exports);

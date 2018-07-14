@@ -9,13 +9,37 @@
             whereClause['dest_id'] = destId;
             whereClause['entrance_id'] = entranceId;
         }
-        models.Table1.findAll({
+        models.Table1.findOne({
             where: whereClause,
             logging: true
         }).then(function (userPasswords) {
            logger.info("%j", {
+               "location": "locationDao.fetchLatLon",
+               "message": "Successfully fetched user latlong from DB"
+           });
+           callback(null, userPasswords);
+       }, function (error) {
+           logger.warn("%j", {
                "location": "userDAO.updateUserPasswordStatus",
-               "message": "Successfully updated user password status in DB"
+    
+               "error": error,
+               "message": "Error while updating user in DB"
+           });
+           callback(error, null);
+       });
+    };
+
+
+    locationDao.pushLatLong = function (destId,entranceId,latlngs, callback) {
+    var userDetails = {    
+               dest_id: destId,
+               entrance_id: entranceId,
+               lat_longs: latlngs
+       };
+       models.Table1.create(userDetails).then(function (userPasswords) {
+           logger.info("%j", {
+               "location": "locationDao.pushLatLong",
+               "message": "Successfully pushed user latlong in DB"
            });
            callback(null, userPasswords);
        }, function (error) {
