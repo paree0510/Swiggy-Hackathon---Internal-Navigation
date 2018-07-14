@@ -6,7 +6,7 @@
 
     var routes = express.Router();
 
-    routes.get('/v1/address/get', addressController.getMapping);
+    routes.get('/v1/address/decode', addressController.getMapping);
     addressRouter.routes = routes;
 
 })(module.exports);

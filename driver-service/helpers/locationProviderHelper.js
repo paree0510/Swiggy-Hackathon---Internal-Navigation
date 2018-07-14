@@ -1,13 +1,19 @@
 (function (locationProviderHelper) {
     var settings = require("../settings");
+    var requestWrapper = require('../utils/httpRequestWrapper');
 
     locationProviderHelper.getPath = function (apartmentId, blockId, entranceId, callback) {
-        var url = settings.locationProviderUrl + '/v1/address/decode?apartment_id=' + apartmentId + ",block_id=" +
-            blockId + ",entrance_id=" + entranceId;
-
+        var url = settings.locationProviderUrl + '/v1/location/fetch';
+        console.log(url);
+        var qs = {
+            apartment_id: entranceId,
+            block_id: blockId,
+            entrance_id: entranceId
+        };
         var requestTemplate = {
             url: url,
-            method: GET,
+            method: 'GET',
+            qs: qs,
             timeout: parseInt(settings.TIMEOUT, 10),
             json: true,
             forever: true,
@@ -26,9 +32,7 @@
                 return callback(errorWrap, null);
             }
 
-            return callback(null, response);
+            return callback(null, response.data);
         });
-
-        callback(null, data);
     }
 })(module.exports);

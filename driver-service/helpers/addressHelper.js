@@ -6,11 +6,12 @@
     var logger = require('../logger').logger;
     var _ = require('underscore');
     var geolib = require('geolib');
+    var addressCache = require('../cache/addressCache');
     
     addressHelper.fetchAddress = function(orderId, latLng,  callback) {
         addressDao.fetchAddress(orderId, function (err, data) {
             if (err) {
-                logger.info("Error getting the data from db");
+                logger.error("Error getting the data from db");
                 callback(err, null);
             } else {
                 var address = data[0].address;
@@ -22,22 +23,29 @@
                     } else {
                         logger.info("resp : ", resp);
 
-                        var apartmentId = resp.apartment;
-                        var blockId = resp.block;
-                        fetchNearestEntrance(apartmentId, latLng, function (err, data) {
+                        var apartmentId = resp.data.apartment;
+                        var blockId = resp.data.block;
+
+                        fetchNearestEntrance(apartmentId, latLng, function (err, result) {
                             if (err) {
                                 logger.info("Error : ", err);
                                 callback(err, null);
                             } else {
 
-                                locationProviderHelper.getPath(apartmentId, blockId, data.entrance_id, function (err, data) {
-                                    if (err) {
-                                        logger.info("Error while getting path. Error : ", err);
+                                addressCache.addOrderDetails(orderId, blockId, result.entrance_id, function (error, data) {
+                                    if (error) {
+                                        callback(error, null);
                                     } else {
-                                        callback(null, data);
+                                        locationProviderHelper.getPath(apartmentId, blockId, result.entrance_id, function (err, data) {
+                                            if (err) {
+                                                logger.info("Error while getting path. Error : ", err);
+                                                callback(err, null);
+                                            } else {
+                                                callback(null, data);
+                                            }
+                                        });
                                     }
                                 });
-
                             }
                         })
                     }
@@ -74,7 +82,7 @@
                     var lat1 = latLngArr[0];
                     var long1 = latLngArr[1];
 
-                    var dist = calculateDistance(lat1, long1, lat2, long2)
+                    var dist = calculateDistance(lat1, long1, lat2, long2);
 
                     if (dist < min) {
                         min = dist;

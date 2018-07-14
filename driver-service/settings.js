@@ -1,8 +1,8 @@
 (function (settings) {
     settings.MYSQL = {
         "username" : "root",
-        "password" : "notarealpassword",
-        "database" : "hack",
+        "password" : "12345",
+        "database" : "hackathon",
         "host" : "localhost",
         "port" : "3306",
         "dialect" : "mysql",
@@ -14,7 +14,13 @@
         }
     };
 
-    settings.decoderUrl = "";
-    settings.locationProviderUrl = "";
+    settings.REDIS = {
+    "HOST": "localhost",
+    "DB": 0,
+    "HOUR_EXPIRY" : 3600
+  };
+
+    settings.decoderUrl = "http://localhost:8001";
+    settings.locationProviderUrl = "http://localhost:8003";
 
 })(module.exports);

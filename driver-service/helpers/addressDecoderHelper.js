@@ -1,12 +1,13 @@
 (function (addressDecoderHelper) {
     var settings = require("../settings");
+    var requestWrapper = require('../utils/httpRequestWrapper');
 
     addressDecoderHelper.getAddressLatLng = function (address, callback) {
-        var url = settings.decoderUrl + '/v1/address/decode?restaurant_id=' + address;
+        var url = settings.decoderUrl + '/v1/address/decode?addressText=' + address;
 
         var requestTemplate = {
             url: url,
-            method: GET,
+            method: 'GET',
             timeout: parseInt(settings.TIMEOUT, 10),
             json: true,
             forever: true,
@@ -27,7 +28,5 @@
 
             return callback(null, response);
         });
-
-        callback(null, data);
     }
 })(module.exports);

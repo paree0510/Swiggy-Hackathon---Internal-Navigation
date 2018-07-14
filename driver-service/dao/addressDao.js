@@ -12,7 +12,7 @@
             where: whereClause
         }).then(function (response) {
             callback(null, response);
-        }).catch(function (error) {
+        }, function (error) {
             logger.error("%j", {
                 "location": "addressDAO.fetchAddress",
                 "orderId": orderId,

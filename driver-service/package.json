@@ -10,6 +10,7 @@
     "geo-point": "^1.0.1",
     "geolib": "^2.0.24",
     "geopoint": "^1.0.1",
+    "ioredis": "^2.5.0",
     "mysql": "^2.9.0",
     "path": "^0.12.7",
     "request": "^2.67.0",

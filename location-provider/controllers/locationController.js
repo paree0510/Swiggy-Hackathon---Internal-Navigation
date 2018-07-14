@@ -7,9 +7,9 @@
     locationController.getLatLng = function (req, res) {
         
         var response = {};
-        var blockId = req.query.block;
-        var entranceId = req.query.entrance;
-
+        var blockId = req.query.block_id;
+        var entranceId = req.query.entrance_id;
+        
         if (!blockId || !entranceId) {
             responseUtils.buildAndSendResponse(-1, "Invalid input", null, res);
             return;
