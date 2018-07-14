@@ -19,7 +19,6 @@
 	    	var value = {
 	    		"lat_lngs" : JSON.parse(latLng)
 	    	}
-        	logger.info(latLng);
         	responseUtils.buildAndSendResponse(0, "SuccessFully fetched the data", value, res);
         }
         })              
