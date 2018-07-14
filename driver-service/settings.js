@@ -15,6 +15,6 @@
     };
 
     settings.decoderUrl = "";
-
+    settings.locationProviderUrl = "";
 
 })(module.exports);

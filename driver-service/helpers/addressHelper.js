@@ -2,6 +2,7 @@
     var addressDao = require('../dao/addressDao');
     var addressDecoderHelper = require('./addressDecoderHelper');
     var apartmententrtanceDao = require('../dao/apartmentEntranceDao');
+    var locationProviderHelper = require('./locationProviderHelper');
     var logger = require('../logger').logger;
     var _ = require('underscore');
     var geolib = require('geolib');
@@ -17,6 +18,7 @@
                 addressDecoderHelper.getAddressLatLng(address, function (err, resp) {
                     if (err) {
                         logger.info("error : ", err);
+                        callback(err, null);
                     } else {
                         logger.info("resp : ", resp);
 
@@ -25,8 +27,17 @@
                         fetchNearestEntrance(apartmentId, latLng, function (err, data) {
                             if (err) {
                                 logger.info("Error : ", err);
+                                callback(err, null);
                             } else {
-                                callback(null, data);
+
+                                locationProviderHelper.getPath(apartmentId, blockId, data.entrance_id, function (err, data) {
+                                    if (err) {
+                                        logger.info("Error while getting path. Error : ", err);
+                                    } else {
+                                        callback(null, data);
+                                    }
+                                });
+
                             }
                         })
                     }
@@ -73,7 +84,7 @@
                     }
                 });
 
-                //
+                //get path from
                 callback(null, result);
             }
         })
