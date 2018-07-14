@@ -11,7 +11,10 @@
         "max" : 100,
             "min" : 0,
             "idle" : 10000
-    }
+        }
     };
+
+    settings.decoderUrl = "";
+    settings.locationProviderUrl = "";
 
 })(module.exports);

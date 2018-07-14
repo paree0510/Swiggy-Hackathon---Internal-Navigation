@@ -32,7 +32,7 @@ def getDistance(lat_long1, lat_long2):
 	return round(distance, 2)
 
 def storeEntries(rows, conn):
-	sql = 'insert into Table2(dest_id, entrance_id, lat_longs) values("%s", "%s", "%s")'
+	sql = 'insert into Table1(dest_id, entrance_id, lat_longs) values("%s", "%s", "%s")'
 
 	for i in rows:
 		print sql%(i[0],i[1],rows[i]["ls"])
@@ -60,7 +60,7 @@ def aggregate(arow, row):
 		arow[(src, dest)]["dist"] = dist
 
 
-sql_query = "select * from Table1"
+sql_query = "select * from Table2"
 
 try:
 	conn = mysql.connector.connect(host=sql_server, user=sql_uname, password=sql_pw, database=database)
