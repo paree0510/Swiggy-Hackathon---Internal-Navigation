@@ -2,7 +2,9 @@
     var express = require("express");
     var routes = express.Router();
 
-    //routes.use(authenticationRouter.routes);
+    var addressRouter = require("./addressRouter");
+
+    routes.use(addressRouter.routes);
     routers.routes = routes;
 
 })(module.exports);
