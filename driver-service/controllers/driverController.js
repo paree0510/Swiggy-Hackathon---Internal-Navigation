@@ -1,7 +1,7 @@
 (function(driverController){
-    var addressDao = require('../dao/addressDao');
     var logger = require('../logger').logger;
     var responseUtils = require('../utils/responseUtils');
+    var addressHelper = require('../helpers/addressHelper');
 
     driverController.getAddress = function(req, res) {
 
@@ -9,14 +9,16 @@
         var latLng = req.query.latLng;
 
         //get Address(Text) from DB
-
-        addressDao.fetchAddress(orderId, function (err, data) {
+        addressHelper.fetchAddress(orderId, latLng,  function (err, data) {
             if (err) {
-                logger.info("Error getting the data from db");
+                responseUtils.buildAndSendResponse(1, "error", null, res);
             } else {
-                responseUtils.buildAndSendResponse(0, "SuccessFully fetched the data", data, res);
+                responseUtils.buildAndSendResponse(0, "Successfully fetched data", data, res);
             }
-        })
+        });
 
     };
+
+
+
 })(module.exports);
