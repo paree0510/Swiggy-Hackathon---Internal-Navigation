@@ -21,7 +21,6 @@ app.get("/", function(req, res){
 // Routing
 var routes = require("./routers").routes;
 app.use('/', routes);
-console.log("Server started 1");
 // Error Handling
 app.use(logErrors);
 function logErrors(err, req, res, next) {
@@ -36,4 +35,3 @@ var server;
 server = http.createServer(app);
 server.listen(8003);
 console.log("Server started");
-
