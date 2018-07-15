@@ -15,7 +15,6 @@
         }, function (error) {
             logger.error("%j", {
                 "location": "addressDAO.fetchAddress",
-                "orderId": orderId,
                 "error": error,
                 "message": "Error while fetching user role by ids from DB"
             });
