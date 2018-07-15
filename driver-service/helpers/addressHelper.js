@@ -7,6 +7,7 @@
     var _ = require('underscore');
     var geolib = require('geolib');
     var addressCache = require('../cache/addressCache');
+    var apartmentBlockDao = require('../dao/apartmentBlockDao');
     
     addressHelper.fetchAddress = function(orderId, latLng,  callback) {
         addressDao.fetchAddress(orderId, function (err, data) {
@@ -50,9 +51,18 @@
                                                     r.push(a);
                                                 });
                                                 var d = {
-                                                    lat_lngs: r
+                                                    lat_lngs: r,
+                                                    blocks: ""
                                                 };
-                                                callback(null, d);
+                                                fetchAllBlocksInAnApartment(apartmentId, function(err, blockResults){
+                                                    if(err){
+                                                        logger.info("Error fetching Blocks list for the apartment");
+                                                        callback(null, d);
+                                                    }else{
+                                                        d.blocks = blockResults;
+                                                        callback(null, d);
+                                                    }
+                                                });
                                             }
                                         });
                                     }
@@ -64,6 +74,27 @@
             }
         })
     };
+
+    function fetchAllBlocksInAnApartment(apartmentId, callback) {
+        apartmentBlockDao.fetchAllBlocks(apartmentId, function(err, data){
+            if(err){
+                callback(err,null);
+            }else{
+                logger.info(data);
+                var blocks = [];
+                _.each(data, function (blockObject) {
+                        var latLngArr3 = blockObject.block_lat_long.split(",");
+                        var blockData = {
+                            name: blockObject.block_id.split("_").pop(),
+                            lat: latLngArr3[0].trim(),
+                            lng: latLngArr3[1].trim()
+                        };
+                        blocks.push(blockData);
+                });
+                callback(null, blocks);
+            }
+        })
+    }
 
     addressHelper.fetchLatLongFromAddress = function(address, callback) {
         addressDecoderHelper.getAddressLatLng(address, callback);
@@ -122,7 +153,6 @@
             if (err) {
                 callback(err, null);
             } else {
-                console.log(orderId, data);
                 var l = [];
                 _.each(lat_longs, function (lat_long) {
                     l.push([lat_long.lat, lat_long.lng]);
