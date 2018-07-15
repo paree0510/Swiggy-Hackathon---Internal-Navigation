@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.16-log)
 # Database: hackathon
-# Generation Time: 2018-07-15 04:43:16 +0000
+# Generation Time: 2018-07-15 07:08:09 +0000
 # ************************************************************
 
 
@@ -40,8 +40,14 @@ LOCK TABLES `Apartment_Blocks_Map` WRITE;
 INSERT INTO `Apartment_Blocks_Map` (`id`, `apartment_id`, `block_id`, `block_lat_long`)
 VALUES
 	(1,'ozone_evergreens','ozone_evergreens_A','12.909368, 77.662744'),
-	(2,'ozone_evergreens','ozone_evergreens_B','12.908482, 77.662649'),
-	(3,'prestige_apartment','prestige_apartment_H','13.063662,77.743355');
+	(2,'ozone_evergreens','ozone_evergreens_B','12.909335, 77.663102'),
+	(3,'prestige_apartment','prestige_apartment_H','13.063662,77.743355'),
+	(4,'ozone_evergreens','ozone_evergreens_C','12.909101, 77.663239'),
+	(5,'ozone_evergreens','ozone_evergreens_D','12.908756, 77.663276'),
+	(6,'ozone_evergreens','ozone_evergreens_E','12.908572, 77.663176'),
+	(7,'ozone_evergreens','ozone_evergreens_F','12.908447, 77.662853'),
+	(8,'ozone_evergreens','ozone_evergreens_G','12.908497, 77.662630'),
+	(9,'ozone_evergreens','ozone_evergreens_H','12.908592, 77.662347');
 
 /*!40000 ALTER TABLE `Apartment_Blocks_Map` ENABLE KEYS */;
 UNLOCK TABLES;
