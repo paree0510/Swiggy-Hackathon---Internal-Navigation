@@ -9,7 +9,7 @@
         var response = {};
         var blockId = req.query.block_id;
         var entranceId = req.query.entrance_id;
-        
+
         if (!blockId || !entranceId) {
             responseUtils.buildAndSendResponse(-1, "Invalid input", null, res);
             return;
@@ -19,6 +19,10 @@
         if(err){
         	logger.info("Error fetching user loaction data from db");
         }else{
+            if (!data || !data.lat_longs) {
+                responseUtils.buildAndSendResponse(0, "SuccessFully fetched the user latlng", [], res);
+                return;    
+            }
 	    	var latLng = data.lat_longs.toString('utf-8');
 	    	var value = {
 	    		"lat_lngs" : JSON.parse(latLng)

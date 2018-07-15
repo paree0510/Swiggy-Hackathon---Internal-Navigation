@@ -16,9 +16,21 @@
                 responseUtils.buildAndSendResponse(0, "Successfully fetched data", data, res);
             }
         });
-
     };
 
+    driverController.postAddress = function (req, res) {
 
+        var orderId = req.body.order_id;
+        var latLngs = req.body.latLngs;
+
+        addressHelper.postAddress(orderId, latLngs, function (err, data) {
+            if (err) {
+                responseUtils.buildAndSendResponse(1, "error", null, res);
+            } else {
+                responseUtils.buildAndSendResponse(0, "Successfully stored data", data, res);
+            }
+        });
+
+    };
 
 })(module.exports);

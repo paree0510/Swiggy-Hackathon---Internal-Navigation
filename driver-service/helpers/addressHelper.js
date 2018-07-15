@@ -41,7 +41,18 @@
                                                 logger.info("Error while getting path. Error : ", err);
                                                 callback(err, null);
                                             } else {
-                                                callback(null, data);
+                                                var r = [];
+                                                _.each(data.lat_lngs, function(latLng){
+                                                    var a = {
+                                                        lat: latLng[0],
+                                                        lng: latLng[1]
+                                                    };
+                                                    r.push(a);
+                                                });
+                                                var d = {
+                                                    lat_lngs: r
+                                                };
+                                                callback(null, d);
                                             }
                                         });
                                     }
@@ -106,4 +117,18 @@
         return geolib.getDistanceSimple({latitude: lat1, longitude: long1}, {latitude: lat2.replace(/[^0-9]/g, ''), longitude: long2.replace(/[^0-9]/g, '')})
     }
 
+    addressHelper.postAddress = function(orderId, lat_longs, callback){
+        addressCache.getOrderData(orderId, function (err, data) {
+            if (err) {
+                callback(err, null);
+            } else {
+                console.log(orderId, data);
+                var l = [];
+                _.each(lat_longs, function (lat_long) {
+                    l.push([lat_long.lat, lat_long.lng]);
+                });
+                locationProviderHelper.postAddress(data.blockId, data.entranceId, l, callback);
+            }
+        })
+    };
 })(module.exports);

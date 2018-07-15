@@ -31,10 +31,11 @@
 
 
     locationDao.pushLatLong = function (destId,entranceId,latlngs, callback) {
+      console.log(JSON.stringify(latlngs));
     var userDetails = {    
                dest_id: destId,
                entrance_id: entranceId,
-               lat_longs: latlngs
+               lat_longs: JSON.stringify(latlngs)
        };
        models.Table1.create(userDetails).then(function (userPasswords) {
            logger.info("%j", {

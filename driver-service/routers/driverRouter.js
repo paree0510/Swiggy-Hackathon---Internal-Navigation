@@ -5,7 +5,7 @@
     var routes = express.Router();
 
     routes.get('/v1/getAddress/', driverController.getAddress);
-    routes.post('/v1/postAddress/', driverController.getAddress);
+    routes.post('/v1/postAddress/', driverController.postAddress);
     driverRouter.routes = routes;
 
 })(module.exports);

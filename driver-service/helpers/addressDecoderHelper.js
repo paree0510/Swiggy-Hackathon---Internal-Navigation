@@ -28,5 +28,5 @@
 
             return callback(null, response);
         });
-    }
+    };
 })(module.exports);
